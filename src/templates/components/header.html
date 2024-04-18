@@ -54,13 +54,9 @@
                                         <h6 class="cat-name"><a href="#" class="text-light-black">Pages</a></h6>
                                     </div>
                                     <ul>
-                                        <li><a href="/login" class="text-light-white fw-500">Login</a></li>
-                                        <li><a href="/register" class="text-light-white fw-500">Sign-up</a></li>
                                         <li><a href="/checkout" class="text-light-white fw-500">Checkout</a></li>
                                         <li>
-                                            <a href="/order-details" class="text-light-white fw-500"
-                                                >Order Details</a
-                                            >
+                                            <a href="/order-details" class="text-light-white fw-500">Order Details</a>
                                         </li>
                                         <li>
                                             <a href="geo-locator.html" class="text-light-white fw-500">Geo Locator</a>
@@ -79,54 +75,7 @@
                         <!-- mobile search -->
                         <!-- user account -->
                         <div class="user-details p-relative">
-                            <a href="#" class="text-light-white fw-500">
-                                <img src="" class="rounded-circle" alt="userimg" /> <span>Hi, Kate</span>
-                            </a>
-                            <div class="user-dropdown">
-                                <ul>
-                                    <li>
-                                        <a href="/order-details">
-                                            <span class="details">Past Orders</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/order-details">
-                                            <span class="details">Upcoming Orders</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="details">Saved</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="details">Gift cards</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="details">Refer a friend</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="details">Perks</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="details">Account</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="details">Help</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="user-footer"><a href="#">Sign Out</a></div>
-                            </div>
+                            <a href="/login" class="text-light-white fw-500 user-block"> Log in </a>
                         </div>
                         <!-- mobile search -->
 
@@ -249,3 +198,64 @@
         </div>
     </header>
 </div>
+
+<script>
+    const userBlock = document.querySelector(".user-block");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+        userBlock.href = "#";
+        userBlock.innerHTML = `
+            <span>Hi ${user.first_name} ${user.last_name} </span>
+
+            <div class="user-dropdown">
+                <ul>
+                    <li>
+                        <a href="/order-details">
+                            <span class="details">Past Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/order-details">
+                            <span class="details">Upcoming Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="details">Saved</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="details">Gift cards</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="details">Refer a friend</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="details">Perks</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="details">Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="details">Help</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="user-footer" onclick="logout()">Sign Out</div>
+            </div>
+        `;
+    }
+    function logout() {
+        localStorage.removeItem("user");
+        location.assign('/')
+    }
+</script>
