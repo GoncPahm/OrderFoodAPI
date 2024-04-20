@@ -250,12 +250,15 @@
                         </a>
                     </li>
                 </ul>
-                <div class="user-footer" onclick="logout()">Sign Out</div>
+                <div class="user-footer">
+                    <a href="{{url_for('user.log_out')}}" onclick = logout()>
+                        <span class="details">Sign out</span>
+                    </a>
+                </div>
             </div>
         `;
     }
     function logout() {
         localStorage.removeItem("user");
-        location.assign('/')
     }
 </script>

@@ -113,10 +113,9 @@
                     if (data.errors.email) emailError.innerHTML = data.errors.email;
                     if (data.errors.password) passwordError.innerHTML = data.errors.password;
                 } else {
-                    // console.log({first_name: data.user[0].UserFirstName, last_name: data.user[0].UserLastName});
                     localStorage.setItem(
                         "user",
-                        JSON.stringify({ first_name: data.user[0].UserFirstName, last_name: data.user[0].UserLastName })
+                        JSON.stringify({ first_name: data.first_name, last_name: data.last_name })
                     );
                     location.assign("/");
                 }

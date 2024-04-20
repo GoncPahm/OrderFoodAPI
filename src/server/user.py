@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm, csrf
 from flask_bcrypt import Bcrypt
 from wtforms import StringField, PasswordField, SubmitField, validators
 import pyodbc
-import asyncio
+from flask_login import login_user, logout_user, LoginManager, UserMixin, current_user, login_required
 
 conn = pyodbc.connect("DRIVER={SQL Server};SERVER=LAPTOP-NIANCD4A\SQLEXPRESS;DATABASE=OrderFood;Trusted_Connection=yes")
 cursor = conn.cursor()
@@ -12,6 +12,17 @@ cursor = conn.cursor()
 user = Blueprint("user", __name__)
 
 bcrypt = Bcrypt()
+login_manager = LoginManager()
+
+class User(UserMixin):
+    def __init__(self, user_id, first_name, last_name):
+        self.id = user_id
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def get_id(self):
+        return str(self.id)
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email',
@@ -80,7 +91,22 @@ class RegisterForm(FlaskForm):
                             "id":"button-register",
                             "class":"btn-second btn-submit full-width btn-login"
                         })
+    
 
+def authenticate(email, password):
+    cursor.execute("SELECT UserID, UserFirstName, UserLastName, UserPassword FROM Users WHERE UserEmail=?", email)
+    user_data = cursor.fetchone()
+    if user_data:
+        
+        if bcrypt.check_password_hash(user_data.UserPassword, password):
+            user_id = user_data.UserID
+            first_name = user_data.UserFirstName
+            last_name = user_data.UserLastName
+            return User(user_id, first_name, last_name), {}
+        else:    
+            return None, {"email": "", "password": "Wrong password"}
+        
+    return None, {"email": "Account isn't registered", "password": ""}
 
 
 @user.route("/login", methods=["GET"])
@@ -96,27 +122,16 @@ def post_login():
         email = form.email.data
         password = form.password.data
         try:
-            cursor.execute("SELECT * FROM Users WHERE UserEmail = ?", email)
-            data = []
-            columns = [column[0] for column in cursor.description]
-            values = cursor.fetchall()
-            for value in values:
-                data.append(dict(zip(columns, value)))
-            # check data
-            if data:
-                password_hash = data[0].get('UserPassword')
-                print("bcrypt", str(bcrypt.check_password_hash(password_hash, password)))
-                if bcrypt.check_password_hash(password_hash, password):
-                    print("true bcrypt")
-                    return jsonify({'success': True, 'user': data})
-                else:
-                    print("false bcrypt")
-                    return jsonify({"errors": {"email": "", "password": "Wrong password"}}) 
+            user_login, error_message = authenticate(email, password)
+            print(error_message)
+            if user_login:
+                login_user(user_login)
+                return jsonify({"first_name": current_user.first_name, "last_name": current_user.last_name})
             else:
-                print("not found")
-                return jsonify({"errors": {"email": "Account isn't registered", "password": ""}}) 
+                return jsonify({"errors": error_message})
         except Exception as e:
             print("Error", str(e))
+            return jsonify({"errors": "An error occurred while processing your request"}), 500
             
     else:
         errors = form.errors
@@ -129,7 +144,7 @@ def register():
 
 @user.route("/register", methods=["POST"])
 def post_register():
-    form = RegisterForm();
+    form = RegisterForm()
     if form.validate_on_submit():
         first_name = form.first_name.data
         last_name = form.last_name.data
@@ -160,4 +175,10 @@ def post_register():
     else:
         errors = form.errors
         return jsonify({ "errors": errors })
+    
+@user.route("/logout", methods=["GET"])
+@login_required
+def log_out():
+    logout_user()
+    return redirect(url_for("index"))
     
