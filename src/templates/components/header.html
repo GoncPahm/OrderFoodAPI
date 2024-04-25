@@ -14,22 +14,24 @@
                         <form class="main-search search-form full-width">
                             <div class="row">
                                 <!-- location picker -->
-                                <div class="col-lg-6 col-md-5">
+                                <div class="col-lg-4 col-md-3">
                                     <a href="/">
                                         <!-- class="delivery-add p-relative" -->
-                                        <span class="address">Food Order</span>
+                                        <span id="logo" class="fs-5">Food Order</span>
                                     </a>
                                 </div>
                                 <!-- location picker -->
                                 <!-- search -->
-                                <div class="col-lg-6 col-md-7">
+                                <div class="col-lg-8 col-md-9">
                                     <div class="search-box padding-10">
                                         <input
                                             type="text"
                                             class="form-control"
-                                            placeholder="Pizza, Burger, Chinese"
+                                            placeholder="Nhập tên món ăn..."
                                             fdprocessedid="ifk5af"
+                                            
                                         />
+                                        <button class="btn-search">Tìm kiếm</button>
                                     </div>
                                 </div>
                                 <!-- search -->
@@ -58,10 +60,10 @@
                                         <li>
                                             <a href="/order-details" class="text-light-white fw-500">Order Details</a>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a href="geo-locator.html" class="text-light-white fw-500">Geo Locator</a>
                                         </li>
-                                        <li><a href="/contact" class="text-light-white fw-500">Contact Us</a></li>
+                                        <li><a href="/contact" class="text-light-white fw-500">Contact Us</a></li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -75,7 +77,10 @@
                         <!-- mobile search -->
                         <!-- user account -->
                         <div class="user-details p-relative">
+
                             <a href="/login" class="text-light-white fw-500 user-block"> Log in </a>
+
+
                         </div>
                         <!-- mobile search -->
 
@@ -85,77 +90,13 @@
                                 <i class="fas fa-shopping-bag"></i>
                                 <span class="user-alert-cart">3</span>
                             </a>
-                            <div class="cart-detail-box">
+                            <div class="cart-detail-box" style="width: 280px;">
                                 <div class="card">
                                     <div class="card-header padding-15">Your Order</div>
-                                    <div class="card-body no-padding">
-                                        <div class="cat-product-box">
-                                            <div class="cat-product">
-                                                <div class="cat-name">
-                                                    <a href="#">
-                                                        <p class="text-light-green">
-                                                            <span class="text-dark-white">1</span> Chilli Chicken
-                                                        </p>
-                                                        <span class="text-light-white">small, chilli chicken</span>
-                                                    </a>
-                                                </div>
-                                                <div class="delete-btn">
-                                                    <a href="#" class="text-dark-white">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="price">
-                                                    <a href="#" class="text-dark-white fw-500"> $2.25 </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cat-product-box">
-                                            <div class="cat-product">
-                                                <div class="cat-name">
-                                                    <a href="#">
-                                                        <p class="text-light-green">
-                                                            <span class="text-dark-white">1</span> loaded cheese
-                                                        </p>
-                                                        <span class="text-light-white">small, chilli chicken</span>
-                                                    </a>
-                                                </div>
-                                                <div class="delete-btn">
-                                                    <a href="#" class="text-dark-white">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="price">
-                                                    <a href="#" class="text-dark-white fw-500"> $2.25 </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cat-product-box">
-                                            <div class="cat-product">
-                                                <div class="cat-name">
-                                                    <a href="#">
-                                                        <p class="text-light-green">
-                                                            <span class="text-dark-white">1</span> Tortia Chicken
-                                                        </p>
-                                                        <span class="text-light-white">small, chilli chicken</span>
-                                                    </a>
-                                                </div>
-                                                <div class="delete-btn">
-                                                    <a href="#" class="text-dark-white">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="price">
-                                                    <a href="#" class="text-dark-white fw-500"> $2.25 </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-total">
-                                            <div class="total-price border-0">
-                                                <span class="text-dark-white fw-700">Items subtotal:</span>
-                                                <span class="text-dark-white fw-700">$9.99</span>
-                                            </div>
-                                            <div class="empty-bag padding-15"><a href="#">Empty bag</a></div>
-                                        </div>
+                                    <div class="card-body no-padding" style="max-height: 300px;
+                                    overflow-y: scroll;">
+                                        
+                                        
                                     </div>
                                     <div class="card-footer padding-15">
                                         <a
@@ -250,12 +191,18 @@
                         </a>
                     </li>
                 </ul>
-                <div class="user-footer" onclick="logout()">Sign Out</div>
+                <div class="user-footer">
+                    <a href="{{url_for('user.log_out')}}" onclick = logout()>
+                        <span class="details">Sign out</span>
+                    </a>
+                </div>
             </div>
         `;
     }
     function logout() {
         localStorage.removeItem("user");
-        location.assign('/')
     }
+
+
+    
 </script>

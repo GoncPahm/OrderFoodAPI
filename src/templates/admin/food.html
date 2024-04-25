@@ -1,0 +1,389 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Food</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>        
+        
+        
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="row ">
+                <div class="col col-lg-6">
+                    <div class="mb-3 w-100">
+                        <label for="name" class="form-label">Tên món ăn</label>
+                        <input type="text" class="form-control" id="name" required>
+                        <div class="invalid-feedback">Vui lòng nhập tên món ăn</div>
+                    </div>
+                    <div class="mb-3 w-100">
+                        <label for="price" class="form-label">Giá</label>
+                        <input type="text" class="form-control" id="price" required>
+                        <div class="invalid-feedback">Vui lòng nhập giá</div>
+                    </div>
+            
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="description" rows="6"></textarea>
+                    </div>
+                    
+                </div>
+                <div class="col col-lg-6">
+
+                    <div class="mb-3 w-100">
+                        <label for="type" class="form-label">Loại đồ ăn</label>
+                        <select class="mb-3 w-100 form-select" id="select-type" required>
+                            <option value="food">Đồ ăn</option>
+                            <option value="drinks">Đồ uống</option>
+                        </select>
+                        <div class="invalid-feedback">Vui lòng chọn loại món ăn</div>
+                    </div>        
+
+                    <div class="mb-3 w-100">
+                        <label for="discount" class="form-label">Giảm giá</label>
+                        <input type="text" class="form-control" id="discount" >
+                        
+                    </div>
+            
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Chọn ảnh</label>
+                        <input class="form-control" type="file" name="file" id="formFile" accept="image/*" required>
+                        <div class="invalid-feedback">Vui lòng chọn ảnh món ăn</div>
+                        <div class="food-img mt-2" style="width: 200px; object-fit: cover;">
+                            <img src="" width="100%"/>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+            <button id="btn-add" type="submit" class="btn btn-primary " onclick="handleAddData()">Add</button>
+            <button id="btn-update" type="submit" class="btn btn-primary disabled " onclick="handleUpdateData()">Update</button>
+        </form>
+
+        
+        
+        <div class="card mb-4 mt-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Danh sách món ăn
+            </div>
+            <table class="table table-bordered w-100 ">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Giảm giá</th>
+                    <th scope="col">Loại</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Votes</th>
+                    <th scope="col">Xóa</th>
+                    <th scope="col">Sửa</th>
+                  </tr>
+                </thead>
+                <tbody id="content">
+                
+                </tbody>
+            </table>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul id="pagination" class="pagination justify-content-center m-4">
+                
+            </ul>
+        </nav>
+    </div>
+</main>
+
+<script>
+    (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      
+      
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+
+    const inputName = document.querySelector('input#name')
+    const inputPrice = document.querySelector('input#price')
+    const inputDiscount = document.querySelector('input#discount')
+    const inputDescription = document.querySelector('#description')
+    const inputImage = document.querySelector('input#formFile')
+    const selectType = document.querySelector('#select-type')
+    const img = document.querySelector('input#formFile ~ .food-img>img')
+    const form = document.forms[1]
+    const btnUpdateData = document.querySelector('#btn-update')
+    const pagination = document.querySelector('#pagination')
+
+    const tableBody = document.querySelector('#content')
+
+    let data = { 
+            currPage: 1,
+            searchStr: '',
+        }
+
+    function start() {
+        loadPage(data)
+    }
+
+    start()
+    async function getData(listFood) {
+        // const listFood = await fetch('http://127.0.0.1:5001/food/').then(res => res.json())
+
+
+        const htmls = listFood.map((food) => {
+            return ` 
+                    <tr class="material-${food.FoodID}">
+                        <th scope="row">${food.FoodID}</th>
+                        <td class="ten-${food.FoodName}">${food.FoodName}</td>
+                        <td class="ten-${food.FoodPrice}">${food.FoodPrice}</td>
+                        <td>${food.FoodDiscount ? food.FoodDiscount + '%' : ''}</td>
+                        <td class="ten-${food.FoodType}">${food.FoodType === 'food' ?  'Đồ ăn' : 'Đồ uống'}</td>
+                        <td 
+                            style="white-space: nowrap; 
+                                overflow: hidden; 
+                                text-overflow: ellipsis;
+                                max-width: 150px;"
+                        >
+                            ${food.FoodDesc}
+                        </td>
+                        <td
+                            style="white-space: nowrap; 
+                                overflow: hidden; 
+                                text-overflow: ellipsis;
+                                max-width: 150px;"
+                            >
+                            ${food.FoodImage}
+                        </td>
+                        <td>${food.FoodRating ? food.FoodRating : ''}</td>
+                        <td><button type="button" class="btn btn-danger" onclick="handleDeleteData('${food.FoodID}')">Delete</button></td>
+                        <td><button type="button" class="btn btn-warning" onclick="handleUpdate('${food.FoodID}')">Update</button></td>
+                    </tr>`
+                })
+        tableBody.innerHTML = htmls.join('')
+
+    }
+
+    async function PostData(data) {
+        const res = await fetch('http://127.0.0.1:5001/food/add', {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        return res.json()
+    }
+
+    async function UpdateData(data, id) {
+        const res = await fetch(`http://127.0.0.1:5001/food/${id}/update`, {
+            method: 'put',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        return res.json()
+    }
+
+    async function DeleteData(id) {
+        const res = await fetch(`http://127.0.0.1:5001/food/${id}/delete`, {
+            method: 'delete',
+        })
+
+        return res.json()
+
+    }
+
+    //handle actions in form
+    const handleAddData = () => {
+        if(form.checkValidity()) {
+            const imgName = '/static/imgs/food/'+ inputImage.files[0]?.name
+            const formData = {
+            name: inputName.value,
+            price: inputPrice.value,
+            img: imgName,
+            description: inputDescription.value || null,
+            type: selectType.value,
+            discount: inputDiscount.value,
+        }
+
+        PostData(formData).then(() => {
+            alert("Thêm thành công")
+            getData()
+        })
+        }
+    }
+    
+    const handleUpdateData = () => {
+        if(form.checkValidity()) {
+           const imgPath = '/static/imgs/food/' + inputImage.files[0].name
+            
+            const formData = {
+                name: inputName.value,
+                price: inputPrice.value,
+                img: imgPath,
+                description: inputDescription.value || null,
+                type: selectType.value,
+                discount: inputDiscount.value,
+            }
+
+            const foodUpdate = JSON.parse(localStorage.getItem('food'))
+            if(!foodUpdate) {
+                return
+            }
+
+            UpdateData(formData, foodUpdate.id).then(() => {
+                alert("Đã sửa thành công")
+                btnUpdateData.classList.add('disabled')
+                getData()
+
+            })
+        }
+    }
+
+    const handleDeleteData = (id) => {
+        if(confirm("Xác nhận xóa")) {
+            DeleteData(id)
+            .then(() => getData())
+            .catch(() => alert("Không thể xóa sản phẩm đang được sử dụng"))
+        }
+    }
+
+    inputImage.onchange = (e) => {
+        const file = URL.createObjectURL(e.target.files[0])
+        img.src = file
+
+        
+    }
+
+    const handleUpdate = async(id) => {
+        const [food] = await fetch('http://127.0.0.1:5001/food/' + id).then(res => res.json())
+        inputName.value = food.FoodName 
+        inputPrice.value = food.FoodPrice
+
+        
+        
+        inputDescription.value = food.FoodDesc,
+        selectType.value = food.FoodType
+        inputDiscount.value = food.FoodDiscount
+        
+        localStorage.setItem('food', JSON.stringify({id, status:'update'}))
+        
+        img.src = food.FoodImage
+        btnUpdateData.classList.remove('disabled') 
+        location.assign('#')
+        
+    }
+
+    function renderPagination(totalFood, currPage = 1) {
+            if(!totalFood) {
+                return pagination.innerHTML = ''
+            }
+
+            const totalPage = Math.ceil(totalFood / 4)
+
+            const pages = [currPage]
+
+            if(currPage > 1) {
+                pages.unshift(currPage - 1)
+            }
+
+            if(currPage < totalPage) {
+                pages.push(currPage + 1)
+            }
+            
+            const htmls = pages.map(
+                page => 
+                    `<li class="page-item">
+                        <a class="page-link" href="#" page="${page}">
+                            ${page}
+                        </a>
+                    </li>`
+                )
+
+            const preLink = 
+                `<li class="page-item">
+                    <a class="page-link" href="#" page="${currPage - 1}">
+                        Previous
+                    </a>
+                </li>`    
+                
+            const nextLink = 
+                `<li class="page-item">
+                    <a class="page-link" href="#" page="${currPage + 1}">
+                        Next
+                    </a>
+                </li>`
+
+            pagination.innerHTML = (currPage > 1 ? preLink : '') + htmls.join('') + (currPage < totalPage ? nextLink : '')
+
+        }
+
+    pagination.onclick = (e) => {
+        if(e.target.closest('.page-link')) {
+            e.preventDefault()
+            const currPage = Number(e.target.getAttribute('page'))
+            data.currPage = currPage
+            loadPage(data)
+        }
+    }
+
+    const foodPerPage = 6
+
+    async function loadPage({ currPage, searchStr }) {
+            let url = 'http://127.0.0.1:5001/food/'
+
+            if(searchStr) url = url + searchStr
+
+            const listFood = await fetch(url).then(response => response.json())
+
+           
+
+            const skip = (currPage - 1) * foodPerPage
+        
+            const filterResult = listFood.filter((food, index) => index >= skip && index <= skip - 1 + foodPerPage)
+            
+            console.log(filterResult)
+            getData(filterResult)
+            renderPagination(listFood.length, currPage)
+
+            pagination.querySelectorAll('.page-link').forEach(pageLink => {
+                pageLink.classList.remove('active')
+                if(pageLink.getAttribute('page') == currPage) {
+                    pageLink.classList.add('active')
+                }
+                
+            })
+
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('active')
+                if(filter) {
+                    if(filter.key && option.classList.contains(filter.key)) {
+                        option.classList.add('active')
+                    }
+                }
+            })
+        }
+
+      
+       
+
+</script>
+
+{% endblock %}

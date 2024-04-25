@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layoutOnlyBody.html" %}
 {% block title%} Register {% endblock %}
 
 {% block content %}
@@ -119,7 +119,7 @@
         const first_name = firstNameField.value;
         const last_name = lastNameField.value;
         const email = emailField.value;
-        const password = emailField.value;
+        const password = passwordField.value;
         const csrfToken = form.querySelector('input[name="csrf_token"]').value;
 
         const formData = {
@@ -149,6 +149,8 @@
                 
             } else {
                 location.assign("/login");
+                
+
             }
         } catch (error) {
             console.log("Error", error);
