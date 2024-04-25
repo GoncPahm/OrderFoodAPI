@@ -135,13 +135,16 @@
     </section>
     <!-- slider -->
     <!-- Browse by category -->
-    <section class="browse-cat u-line section-padding">
+    <!-- <section class="browse-cat u-line section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="section-header-left">
                         <h3 class="text-light-black header-title title">
-                            Browse by cuisine
+
+                            Danh mục
+                           
+
                             {% if current_user.is_authenticated %}
                                 {{ current_user.get_id() }}
                             {%endif%}
@@ -151,89 +154,39 @@
                 </div>
                 <div class="col-12">
                     <div
-                        class="category-slider swiper-container swiper-container-initialized swiper-container-horizontal"
-                    >
+                        class="category-slider swiper-container swiper-container-initialized swiper-container-horizontal"   
+                    > 
                         <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px)">
                             <div class="swiper-slide swiper-slide-active" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
+
+                                <a href="/food?id=bun" class="categories">
+
                                     <div class="icon icon-parent text-custom-white bg-light-green">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
-                                    <span class="text-light-black cat-name">Brooklyn</span>
+                                    <span class="text-light-black cat-name">Bún</span>
                                 </a>
                             </div>
                             <div class="swiper-slide swiper-slide-next" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
+
+                                <a href="/food?id=pho" class="categories">
                                     <div class="icon text-custom-white bg-light-green">
                                         <img src="{{ url_for('static', filename='imgs/linguine.png') }}" class="rounded-circle" alt="categories" />
                                     </div>
-                                    <span class="text-light-black cat-name">Italian </span>
+                                    <span class="text-light-black cat-name">Phở </span>
                                 </a>
                             </div>
                             <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
+
+                                <a href="/food?id=com" class="categories">
                                     <div class="icon text-custom-white bg-light-green">
                                         <img src="{{ url_for('static', filename='imgs/linguine.png') }}" class="rounded-circle" alt="categories" />
                                     </div>
-                                    <span class="text-light-black cat-name">Thai </span>
+                                    <span class="text-light-black cat-name">Cơm </span>
+
                                 </a>
                             </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Chinese </span>
-                                </a>
-                            </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Mexican </span>
-                                </a>
-                            </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Mexican </span>
-                                </a>
-                            </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Mexican </span>
-                                </a>
-                            </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Mexican </span>
-                                </a>
-                            </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Mexican </span>
-                                </a>
-                            </div>
-                            <div class="swiper-slide" style="width: 160px; margin-right: 15px">
-                                <a href="/details" class="categories">
-                                    <div class="icon text-custom-white bg-light-green">
-                                        <img src="{{ url_for('static', filename='imgs/tapenade.png') }}" class="rounded-circle" alt="categories" />
-                                    </div>
-                                    <span class="text-light-black cat-name">Mexican </span>
-                                </a>
-                            </div>
+                            
                         </div>
                 
                         <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
@@ -241,10 +194,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Browse by category -->
     <!-- your previous order -->
-    <section class="recent-order section-padding">
+    <!-- <section class="recent-order section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -279,10 +232,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- your previous order -->
     <!-- Explore collection -->
-    <section class="ex-collection section-padding">
+    <section id="food-wrapper" class="ex-collection section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -292,19 +245,31 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="ex-collection-box mb-xl-20">
                         <img src="{{ url_for('static', filename='imgs/linguine.png') }}" class="img-fluid full-width" alt="image" />
                         <div class="category-type overlay padding-15">
                             <a href="/details" class="category-btn">Top rated</a>
                         </div>
                     </div>
+                </div> -->
+                <div class="col-12">
+                    <div class="sort-wrapper d-flex align-content-center">
+                        <span class="label">Lọc theo</span>
+                        <ul class="list-options d-flex align-content-center ">
+                            <li class="option all">Tất cả</li>
+                            <!-- <li class="option">Phổ biến</li> -->
+                            <li class="option promo">khuyến mãi</li>
+                            <li class="option price-asc">Giá thấp đến cao</li>
+                            <li class="option price-desc">Giá cao đến thấp</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div id="list-food" class="row">
+                        <!-- <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="product-box mb-xl-20">
                                 <div class="product-img">
                                     <a href="/details">
@@ -357,13 +322,340 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
+
+        <nav aria-label="Page navigation example">
+            <ul id="pagination" class="pagination justify-content-center m-4">
+            
+            </ul>
+        </nav>
     </section>
     <!-- Explore collection -->
+    
+
+    <script>
+        
+
+        const foodURL = 'http://127.0.0.1:5001/food/'
+        const listFoodNode = document.querySelector('#list-food')
+        const pagination = document.querySelector('#pagination')
+        const searchBox = document.querySelector('.search-box input')
+        const btnSearch = document.querySelector('.btn-search')
+        const foodPerPage = 4
+
+        document.querySelector('#logo').onclick = function() {
+            sessionStorage.removeItem('data')
+        }
+
+        //fix
+        if(location.href === 'http://127.0.0.1:5000' || location.href === 'http://127.0.0.1:5000/') {
+            sessionStorage.removeItem('data')
+        }
+       
+        
+        const dataStore = JSON.parse(sessionStorage.getItem('data')) || ''
+        let data = { 
+            currPage: 1,
+            searchStr: '',
+            filter: {
+                isFilter: false,
+                key: 'all',
+                name: ''
+            }
+        }
+
+        if(dataStore) data = {...dataStore}
+        console.log(data)
+
+
+
+        function start() {
+            loadPage(data)
+        }
+
+        start()
+        
+        async function loadPage({ currPage, searchStr, filter }) {
+            let url = foodURL
+
+            if(filter.isFilter && searchStr) {
+                url = foodURL + `filter?key=${filter.key}&name=${searchStr}`
+            }
+
+            else if(filter.isFilter) {
+                url = foodURL + `filter?key=${filter.key}`
+            }
+
+            else if(searchStr) url = foodURL + searchStr
+
+            const listFood = await fetch(url).then(response => response.json())
+
+            //  console.log(listFood)
+
+            const skip = (currPage - 1) * foodPerPage
+        
+            const filterResult = listFood.filter((food, index) => index >= skip && index <= skip - 1 + foodPerPage)
+            
+            renderFood(filterResult)
+            renderPagination(listFood.length, currPage)
+
+            pagination.querySelectorAll('.page-link').forEach(pageLink => {
+                pageLink.classList.remove('active')
+                if(pageLink.getAttribute('page') == currPage) {
+                    pageLink.classList.add('active')
+                }
+                
+            })
+
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('active')
+                if(filter) {
+                    if(filter.key && option.classList.contains(filter.key)) {
+                        option.classList.add('active')
+                    }
+                }
+            })
+
+            searchBox.value = searchStr
+            
+            console.log(listFood, searchBox.value)
+
+            if(listFood.length === 0) {
+            
+                listFoodNode.classList.add('show-empty')
+                    
+            } else {
+                // listFoodNode.removeChild(div)
+                listFoodNode.classList.remove('show-empty')
+            }
+
+        }
+        
+        async function renderFood(listFood) {
+            const likeItems = await fetch('http://127.0.0.1:5001/like/user-id/{{current_user.get_id()}}').then(response => response.json())
+            const foodLike = likeItems.map(likeItem => likeItem.FoodID)
+            console.log(foodLike)
+            const htmls = listFood.map(food => {
+                const { FoodID, FoodName, FoodPrice, FoodDiscount, FoodImage, FoodRating } = food
+                const promo = FoodDiscount ? Number(FoodDiscount) : 0
+                const oldPrice = Number(FoodPrice).toLocaleString('en-US')
+                const newPrice = Math.round((100 - promo) * Number(FoodPrice) / 100).toLocaleString('en-US')
+
+                const heartIcon = foodLike.includes(FoodID) ? 'heart_active.svg' : 'heart.svg'
+                return `
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product-box mb-xl-20" food-id="${FoodID}">
+                            <div class="product-img">
+                                <img
+                                    src="${FoodImage}"
+                                    class="img-fluid full-width"
+                                    alt="product-img"
+                                />
+                                <div class="overlay">
+                                    <div class="product-tags padding-10">
+                                        <span class="circle-tag ${FoodID} " onclick="handleLikeAction({{current_user.get_id()}}, ${FoodID})">
+
+                                            
+                                            <img src="{{ url_for('static', filename='imgs/') }}${heartIcon}" alt="tag" />
+                                        </span>
+                                        <div class="custom-tag ${FoodDiscount ? 'd-block' : 'd-none'}">
+                                            <span class="text-custom-white rectangle-tag bg-gradient-red">
+                                                ${FoodDiscount ? FoodDiscount : ''}%
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="product-caption">
+                                <div class="title-box">
+                                    <h6 class="product-title text-light-black">
+                                        ${FoodName}
+                                    </h6>
+                                    <div class="tags">
+                                        <span class="text-custom-white rectangle-tag bg-yellow">3.1</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-light-white">Chuẩn cơm mẹ nấu!</p>
+
+                                <div class="product-details">
+                                    <div class="price-time">
+                                        <span class="old-price" style="text-decoration: line-through"
+                                            >${FoodDiscount ? oldPrice + ' đ' : ''} </span>
+                                        <span class="text-light-white price">${newPrice} đ</span>
+                                    </div>
+                                    <div class="rating">
+                                        <span>
+                                            <i class="fas fa-star text-yellow"></i>
+                                            <i class="fas fa-star text-yellow"></i>
+                                            <i class="fas fa-star text-yellow"></i>
+                                            <i class="fas fa-star text-yellow"></i>
+                                            <i class="fas fa-star text-yellow"></i>
+                                        </span>
+                                        <span class="text-light-white text-right">${FoodRating || 0} ratings</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                `
+            })
+            listFoodNode.innerHTML = htmls.join('')
+        }
+
+        function renderPagination(totalFood, currPage = 1) {
+            if(!totalFood) {
+                return pagination.innerHTML = ''
+            }
+
+            const totalPage = Math.ceil(totalFood / foodPerPage)
+
+            const pages = [currPage]
+
+            if(currPage > 1) {
+                pages.unshift(currPage - 1)
+            }
+
+            if(currPage < totalPage) {
+                pages.push(currPage + 1)
+            }
+            
+            const htmls = pages.map(
+                page => 
+                    `<li class="page-item">
+                        <a class="page-link" href="#food-wrapper" page="${page}">
+                            ${page}
+                        </a>
+                    </li>`
+                )
+
+            const preLink = 
+                `<li class="page-item">
+                    <a class="page-link" href="#food-wrapper" page="${currPage - 1}">
+                        Previous
+                    </a>
+                </li>`    
+                
+            const nextLink = 
+                `<li class="page-item">
+                    <a class="page-link" href="#food-wrapper" page="${currPage + 1}">
+                        Next
+                    </a>
+                </li>`
+
+            pagination.innerHTML = (currPage > 1 ? preLink : '') + htmls.join('') + (currPage < totalPage ? nextLink : '')
+
+        }
+
+        pagination.onclick = (e) => {
+        // e.preventDefault()
+            if(e.target.closest('.page-link')) {
+                const currPage = Number(e.target.getAttribute('page'))
+                data.currPage = currPage
+                loadPage(data)
+            }
+        }
+    
+        //like dislike
+        function handleLikeAction(userId, foodId) {
+            const likeURL = 'http://127.0.0.1:5001/like'
+            const removeLikeURL = 'http://127.0.0.1:5001/remove-like'
+
+            const heartIcon = '/static/imgs/heart.svg'
+            const heartActiveIcon = '/static/imgs/heart_active.svg'
+
+            const formData = { userId, foodId }
+
+            document.querySelectorAll('.circle-tag img').forEach(likeElement => {
+                if(likeElement.parentElement.classList.contains(foodId)) {
+                    if(likeElement.src.includes(heartIcon)) {
+                        likeElement.src = likeElement.src.replace(heartIcon, heartActiveIcon)
+
+                        postLikeAction(likeURL, formData).catch(err => console.log(err))                     
+                    } else {
+                        likeElement.src = likeElement.src.replace(heartActiveIcon, heartIcon)
+
+                        removeLikeAction(removeLikeURL, formData).catch(err => console.log(err))
+                    }
+                    return
+                }
+            })
+            
+            
+        }
+
+        async function postLikeAction(url, data) {
+            const response = await fetch(url, {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+                
+            })
+            return response.json()
+        } 
+
+        async function removeLikeAction(url, data) {
+            const response = await fetch(url, {
+                method: 'delete',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+                
+            })
+            return response.json()
+        }
+
+        btnSearch.onclick = (e) => {
+            e.preventDefault()
+            const searchStr = searchBox.value.trim()
+            if(searchStr) {
+                data.currPage = 1
+                data.searchStr = searchStr
+                data.filter.key = 'all'
+                sessionStorage.setItem('data', JSON.stringify(data))
+                loadPage(data)
+                location.assign(`#food-wrapper?search=${searchStr}`)
+            }
+
+        }
+        listFoodNode.onclick = function(e) {
+            if(e.target.closest('.product-box')) {
+                if(!e.target.matches('.circle-tag img')) {
+                    const id = e.target.closest('.product-box').getAttribute('food-id')
+                    location.assign('/food?id='+id)
+                }
+            }
+        }
+
+
+        const filterOptions = document.querySelector('.list-options')
+    
+        filterOptions.onclick = function(e) {
+            if(e.target.closest('.option')) {
+                document.querySelectorAll('.option').forEach(option => option.classList.remove('active'))
+                e.target.classList.add('active')
+                const key = e.target.classList[1]
+        
+                data.currPage = 1
+                data.filter.isFilter = true
+                data.filter.key = key
+
+                sessionStorage.setItem("data", JSON.stringify(data))
+
+                loadPage(data)
+                location.assign(`#food-wrapper?filter=${data.filter.key}`)
+            }
+        }
+        
+    </script>
 
     
 {% endblock %}

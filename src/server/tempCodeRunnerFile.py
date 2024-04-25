@@ -20,7 +20,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-conn = pyodbc.connect("DRIVER={SQL Server};SERVER=LAPTOP-NIANCD4A\SQLEXPRESS;DATABASE=OrderFood;Trusted_Connection=yes")
+
+conn = pyodbc.connect("DRIVER={SQL SERVER};SERVER=LAPTOP-O48LC4FO\\QHUY;DATABASE=OrderFood;Trusted_Connection=yes")
+
 cursor = conn.cursor()
 
 @login_manager.user_loader
@@ -31,7 +33,7 @@ def load_user(user_id):
     if user_data:
         user_id = user_data[0]
         return User(user_id)
-    
+
     return redirect(url_for("index"))
 
 

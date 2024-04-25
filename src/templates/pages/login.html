@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block title%} Login {% endblock %} {% block content %}
+{% extends "layoutOnlyBody.html" %} {% block title%} Login {% endblock %} {% block content %}
 <div class="inner-wrapper">
     <div class="container-fluid no-padding">
         <div class="row no-gutters overflow-auto">
@@ -91,6 +91,7 @@
         const csrfToken = form.querySelector('input[name="csrf_token"]').value;
         if (email == "admin@gmail.com" && password == "admin") {
             location.assign("/admin");
+           // location.assign("/")
         } else {
             const formData = {
                 email,
