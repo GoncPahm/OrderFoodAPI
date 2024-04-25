@@ -119,7 +119,7 @@
         const first_name = firstNameField.value;
         const last_name = lastNameField.value;
         const email = emailField.value;
-        const password = emailField.value;
+        const password = passwordField.value;
         const csrfToken = form.querySelector('input[name="csrf_token"]').value;
 
         const formData = {
@@ -148,11 +148,13 @@
                 if(data.errors.last_name) lastNameError.innerHTML = data.errors.last_name;
                 
             } else {
-                // location.assign("/login");
+                location.assign("/login");
             }
         } catch (error) {
             console.log("Error", error);
         }
+
+
     })
 </script>
 

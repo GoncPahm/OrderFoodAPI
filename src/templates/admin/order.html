@@ -1,0 +1,36 @@
+{% extends "layoutAdmin.html" %} {% block title %}Admin{% endblock %} {% block content%}
+
+<div class="card mb-4 mt-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Danh sách đơn hàng
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID ORDER</th>
+                <th scope="col">ID USER</th>
+                <th scope="col">Ngày đặt hàng</th>
+                <th scope="col">Trạng thái đơn hàng</th>
+                <th scope="col">Phương thức thanh toán</th>
+            </tr>
+        </thead>
+        <tbody id="content">
+            {%if orders == [] %}
+            <tr>
+                <th scope="col" colspan="5">EMPTY</th>
+            </tr>
+            {%else%} {% for order in orders %}
+            <tr data-food-id="{{order.OrderID}}">
+                <th scope="col">{{order.OrderID}}</th>
+                <th scope="col">{{order.UserID}}</th>
+                <th scope="col">{{order.OrderDate}} vnđ</th>
+                <th scope="col">{% if order.Status == 0 %} Thành công {%else%} Đang giao hàng {%endif%} %</th>
+                <th scope="col">{{order.OrderPayment}}</th>
+            </tr>
+            {%endfor%} {%endif%}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

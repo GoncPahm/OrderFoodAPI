@@ -1,0 +1,198 @@
+{% extends "layoutAdmin.html" %} {% block title %}Admin User{% endblock %} {% block content%}
+
+<form class="form-update-user px-2" method="PUT" action="/admin/user-manager">
+    <h3>Update User</h3>
+    <div class="row">
+        {{ form.hidden_tag() }}
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-light-white fs-14">UserID</label>
+                {{ form.UserID }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-light-white fs-14">FirstName</label>
+                {{ form.UserFirstName }}
+                <p class="firstname-error"></p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-light-white fs-14">LastName</label>
+                {{ form.UserLastName }}
+                <p class="lastname-error"></p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-light-white fs-14">Email</label>
+                {{ form.UserEmail }}
+                <p class="email-error"></p>
+            </div>
+        </div>
+        <div class="form-group">{{ form.submit() }}</div>
+    </div>
+</form>
+
+<div class="card mb-4 mt-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Danh sách người dùng
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody id="content">
+            {%if users == [] %}
+            <tr>
+                <th scope="col" colspan="5">EMPTY</th>
+            </tr>
+            {%else%} {% for user in users %}
+            <tr data-user_id="{{user.UserID}}" class="user">
+                <th scope="col">{{user.UserID}}</th>
+                <th scope="col">{{user.UserFirstName}}</th>
+                <th scope="col">{{user.UserLastName}}</th>
+                <th scope="col">{{user.UserEmail}}</th>
+                <th scope="col">
+                    <i class="fa-solid fa-pen icon-update"></i>
+                </th>
+                <th scope="col">
+                    <i class="fa-solid fa-trash icon-delete"></i>
+                </th>
+            </tr>
+            {%endfor%} {%endif%}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const tableContent = document.querySelector("#content");
+    const userList = document.querySelectorAll(".user");
+    const form = document.querySelector(".form-update-user");
+    const userIDField = form.elements["user-id-field"];
+    const userFirstNameField = form.elements["user-firstname-field"];
+    const userLastNameField = form.elements["user-lastname-field"];
+    const userEmailField = form.elements["user-email-field"];
+    const buttonUpdate = document.querySelector("#button-update");
+
+    const errorEmail = document.querySelector(".email-error");
+    const errorFirstName = document.querySelector(".firstname-error");
+    const errorLastName = document.querySelector(".lastname-error");
+
+    userFirstNameField.addEventListener("focus", () => {
+        errorFirstName.innerHTML = "";
+    });
+    userLastNameField.addEventListener("focus", () => {
+        errorLastName.innerHTML = "";
+    });
+    userEmailField.addEventListener("focus", () => {
+        errorEmail.innerHTML = "";
+    });
+
+    async function renderData() {
+        const res = await fetch("http://127.0.0.1:5000/get_all_user");
+        const data = await res.json();
+        const usersData = data.users;
+        console.log(usersData);
+        let htmls = "";
+        if (usersData != []) {
+            htmls = usersData
+                .map(
+                    (user) => `
+                <tr data-user_id="${user.UserID}" class="user" onclick="updateUser(${user.UserID}, event)">
+                    <th scope="col">${user.UserID}</th>
+                    <th scope="col">${user.UserFirstName}</th>
+                    <th scope="col">${user.UserLastName}</th>
+                    <th scope="col">${user.UserEmail}</th>
+                    <th scope="col">
+                        <i class="fa-solid fa-pen icon-update"></i>
+                    </th>
+                    <th scope="col">
+                        <i class="fa-solid fa-trash icon-delete"></i>
+                    </th>
+                </tr>
+            `
+                )
+                .join("");
+        } else {
+            htmls = `
+                <tr>
+                    <th scope="col" colspan="5">EMPTY</th>
+                </tr>
+            `;
+        }
+        tableContent.innerHTML = htmls;
+    }
+
+    renderData();
+
+    async function updateUser(userID, event) {
+        if (event.target.closest(".icon-update")) {
+            const res = await fetch(`http://127.0.0.1:5000/get_user/${userID}`);
+            const data = await res.json();
+            const { UserEmail, UserFirstName, UserID, UserLastName } = data.user[0];
+
+            userIDField.value = UserID;
+            userFirstNameField.value = UserFirstName;
+            userLastNameField.value = UserLastName;
+            userEmailField.value = UserEmail;
+
+            errorEmail.innerHTML = "";
+            errorFirstName.innerHTML = "";
+            errorLastName.innerHTML = "";
+        }
+    }
+
+    buttonUpdate.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const UserEmail = userEmailField.value;
+        const UserID = userIDField.value;
+        const UserFirstName = userFirstNameField.value;
+        const UserLastName = userLastNameField.value;
+        const csrfToken = form.querySelector('input[name="csrf_token"]').value;
+        if (!UserID) {
+            alert("Vui lòng chọn một dữ liệu để cập nhật");
+        } else {
+            const formData = {
+                UserID,
+                UserEmail,
+                UserFirstName,
+                UserLastName,
+                csrf_token: csrfToken,
+            };
+            const res = await fetch(`http://127.0.0.1:5000/update_user/${UserID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await res.json();
+            console.log(data);
+            if (data.errors) {
+                if (data.errors.UserEmail) errorEmail.innerHTML = data.errors.UserEmail;
+                if (data.errors.UserFirstName) errorFirstName.innerHTML = data.errors.UserFirstName;
+                if (data.errors.UserLastName) errorLastName.innerHTML = data.errors.UserLastName;
+            }
+            if (data.success) {
+                userIDField.value = "";
+                userFirstNameField.value = "";
+                userLastNameField.value = "";
+                userEmailField.value = "";
+                renderData();
+                alert("Cập nhật thành công");
+            }
+        }
+    });
+</script>
+{% endblock %}

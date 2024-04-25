@@ -1,0 +1,49 @@
+{% extends "layoutAdmin.html" %} {% block title %}Admin{% endblock %} {% block content%}
+<div class="card mb-4 mt-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Danh sách món ăn
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Giảm giá(%)</th>
+                <th scope="col">Loại</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Xóa</th>
+                <th scope="col">Sửa</th>
+            </tr>
+        </thead>
+        <tbody id="content">
+            {% for food in products %}
+            <tr data-food-id="{{food.FoodID}}">
+                <th scope="col">{{food.FoodID}}</th>
+                <th scope="col">{{food.FoodName}}</th>
+                <th scope="col">{{food.FoodPrice}} vnđ</th>
+                <th scope="col">
+                    {% if food.FoodDiscount %}
+                        {{food.FoodDiscount}}
+                    {%else%}
+                        0 
+                    {%endif%}
+                    %
+                </th>
+                <th scope="col">{{food.FoodType}}</th>
+                <th scope="col" class="text-limit">{{food.FoodDesc}}</th>
+                <th scope="col" class="text-limit">{{food.FoodImage}}</th>
+                <th scope="col">
+                    <i class="fa-solid fa-trash"></i>
+                </th>
+                <th scope="col">
+                    <i class="fa-solid fa-pen"></i>
+                </th>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

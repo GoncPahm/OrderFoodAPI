@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, json, redirect, url_for
+from flask import Blueprint, request, jsonify, json, redirect, url_for, session
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, csrf
 from flask_bcrypt import Bcrypt
@@ -126,6 +126,7 @@ def post_login():
             print(error_message)
             if user_login:
                 login_user(user_login)
+                session["user_id"] = user_login.get_id()
                 return jsonify({"first_name": current_user.first_name, "last_name": current_user.last_name})
             else:
                 return jsonify({"errors": error_message})
