@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block title %}Purchase History{% endblock %}
+{% block content %}
+<div class="main-sec"></div>
+<!-- Navigation -->
+<section class="purchase-history-page section-padding bg-light-theme">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header-left">
+                    <h3 class="text-light-black header-title fw-700">Purchase History</h3>
+                </div>
+                <div class="purchase-history-box">
+                    <div class="purchase-history-title u-line full-width mb-xl-20">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <h5 class="text-light-black fw-600">Order ID</h5>
+                            </div>
+                            <div class="col-lg-4">
+                                <h5 class="text-light-black fw-600">Order Date</h5>
+                            </div>
+                            <div class="col-lg-4">
+                                <h5 class="text-light-black fw-600">Total Price</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- repeat this div for each order -->
+                    <div class="purchase-history-list mb-xl-20">
+                        <div class="row mb-2">
+                            <div class="col-lg-4">
+                                <span class="text-light-white fs-6 orderId"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <span class="text-light-white fs-6 orderDate"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <span class="text-light-white col-lg-6 fs-6 totalPrice"></span>
+                                    <a href="" class="col-lg-6 fw-600 d-block fs-6">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end of order repeat -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/order-history')
+            .then(response => response.json())
+            .then(data => {
+                const historyList = document.querySelector('.purchase-history-list');
+                historyList.innerHTML = '';
+                if (data && data.length > 0) {
+                    data.forEach((order) => {
+                        const orderDiv = document.createElement('div');
+                        orderDiv.classList.add('row', 'mb-2', 'mt-4', 'u-line');
+                        orderDiv.innerHTML = `
+                            <div class="col-lg-4">
+                                <span class="text-light-white fs-6">#${order.OrderID}</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <span class="text-light-white fs-6">${order.OrderDate}</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <span class="text-light-white col-lg-6 fs-6">${parseInt(order.TotalPrice)}</span>
+                                    <a href="/order-details/${order.OrderID}" class="col-lg-6 fw-600 d-block fs-6">View Details</a>
+                                </div>
+                            </div>
+                        `;
+                        historyList.appendChild(orderDiv);
+                    });
+                } else {
+                    historyList.innerHTML = '<div class="text-center fs-3">No purchase history available.</div>';
+                }
+
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+{% endblock %}

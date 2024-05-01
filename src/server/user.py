@@ -181,5 +181,81 @@ def post_register():
 @login_required
 def log_out():
     logout_user()
+    session.pop('user_id', default=None)
     return redirect(url_for("index"))
+
+@user.route('/users', methods=['GET'])
+def get_list_user():
+    try:
+        cursor = conn.cursor()
+        cursor.execute("Select * from users")
+        result = []
+        keys = []
+        for i in cursor.description:
+            keys.append(i[0])
+        for val in cursor.fetchall():
+            result.append(dict(zip(keys,val)))
+        resp = jsonify(result)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+
+
+@user.route("/like", methods=['POST'])
+def add_like():
+    try:
+        user_id = request.json.get("userId")
+        food_id = request.json.get("foodId")
+        cursor = conn.cursor()
+        data = (user_id, food_id)
+        cursor.execute("insert into FavouriteItems values(?, ?)", data)
+        conn.commit()
+        resp = jsonify(
+            {
+                "id": user_id,
+                "food-id": food_id,
+                "isLike": True
+            })
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+
+@user.route("/remove-like", methods=['DELETE'])
+def remove_like():
+    try:
+        user_id = request.json.get("userId")
+        food_id = request.json.get("foodId")
+        cursor = conn.cursor()
+        cursor.execute("delete FavouriteItems where UserID = ? and FoodID = ?", user_id, food_id)
+        conn.commit()
+        resp = jsonify(
+            {
+                "id": user_id,
+                "food-id": food_id,
+                "isLike": False
+            })
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+
+@user.route('/like/user-id/<int:id>', methods=['GET'])
+def get_items_like(id):
+    try:
+        cursor = conn.cursor()
+        cursor.execute("select * from FavouriteItems where UserID = ?", id)
+        result = []
+        keys = []
+        for i in cursor.description:
+            keys.append(i[0])
+        for val in cursor.fetchall():
+            result.append(dict(zip(keys, val)))
+        resp = jsonify(result)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+
     

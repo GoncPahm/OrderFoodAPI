@@ -1713,6 +1713,7 @@ span.type-tag{
 
 .product-img img {
     height: 100%;
+    object-fit: cover;
 }
 
 
@@ -3804,7 +3805,7 @@ footer .footer-links .appimg {
     position: absolute;
     left: 0;
     right: 0;
-    top: 55%;
+    top: 50%;
     transform: translate(0px, -50%);
 }
 .user-page .login-sec .login-box {
@@ -3830,15 +3831,18 @@ footer .footer-links .appimg {
 .user-page .login-sec .login-box span.terms a {
     margin: 0 3px;
 }
-.user-page .login-sec .login-box .form-group .field-icon {
-    float: right;
-    margin-left: -25px;
-    margin-top: -36px;
+
+.field-password {
     position: relative;
-    z-index: 2;
-    right: 18px;
-    cursor: pointer;
 }
+
+.user-page .login-sec .login-box .form-group .field-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(50%);
+}
+
 /*=========================
 9. Checkout
 ===========================*/
@@ -3855,7 +3859,7 @@ footer .footer-links .appimg {
     display: block;
     margin-bottom: 0;
 }
-.tracking-sec .tracking-map,
+.tracking-sec #tracking-map,
 .tracking-sec .tracking-details {
     flex: 0 0 50%;
     max-width: 50%;
@@ -3954,13 +3958,16 @@ footer .footer-links .appimg {
 #add-listing-tab .step-steps > li.done:before {
     background-color: #00a000;
 }
-.tracking-sec .tracking-map #pickupmap {
+.tracking-sec #tracking-map #pickupmap {
     height: 300px;
     width: 100%;
 }
 .tracking-sec .tracking-details .fullpageview {
     position: absolute;
     bottom: 20px;
+}
+#tracking-map {
+    height: 400px;
 }
 .md-modal {
     margin: auto;
@@ -4497,4 +4504,86 @@ ul.theme-ul li img {
 }
 .theme-colors p {
     line-height: 19px;
+}
+
+/* pagination */
+.pagination {
+    .page-link {
+        color: #ff0018;
+        font-weight: bold;
+    }
+    user-select: none;
+}
+
+.pagination .page-link.active {
+    background-color: #ff0018;
+    color: #fff;
+    pointer-events: none;
+    
+}
+
+.btn-search {
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    width: 100px;
+    height: 38px;
+    background-color: #ff0018;
+}
+
+.add-to-cart .btn {
+    min-width: 40px;
+    height: 38px;
+    background-color: #28a745;
+    color: #fff;
+    outline: none;
+    border: none;
+
+}
+
+.add-to-cart .total-amount {
+    font-weight: 600;
+    font-size: 20px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.add-to-cart .btn-add-to-cart {
+    margin-left: 12px;
+}
+
+.sort-wrapper {
+    background-color: #ededed;
+    height: 60px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    align-items: center;
+}
+
+.sort-wrapper .label {
+    margin-left: 12px;
+}
+
+.sort-wrapper .list-options {
+    list-style: none;
+   
+}
+
+.sort-wrapper .option {
+    background-color: #fff;
+    padding: 4px 12px;
+    margin-left: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    user-select: none;
+    
+}
+
+.sort-wrapper .option.active {
+    background-color: #ff0018;
+    color: #fff;
+    pointer-events: none;
+
 }

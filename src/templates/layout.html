@@ -67,18 +67,9 @@
             href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
         />
-        <!-- place -->
-        <script
-            type="text/javascript"
-            charset="UTF-8"
-            src="https://maps.googleapis.com/maps-api-v3/api/js/56/8/common.js"
-        ></script>
-        <script
-            type="text/javascript"
-            charset="UTF-8"
-            src="https://maps.googleapis.com/maps-api-v3/api/js/56/8/util.js"
-        ></script>
 
+        <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -177,4 +168,91 @@
 
         <span id="PING_IFRAME_FORM_DETECTION" style="display: none"></span>
     </body>
+
+    <script>
+        var cartContainer = document.querySelector('.card-body')
+
+        async function renderCart(userId) {
+            const cartURL = 'http://127.0.0.1:5000/cart/' + userId
+            const cartItems = await fetch(cartURL).then(response => response.json())
+
+            let total = 0
+           
+
+            const htmls = cartItems.map((item, index) => {
+                total += item.newPrice
+                return `
+                <div class="cat-product-box">
+                    <div class="cat-product">
+                        <div class="cat-name">
+                            <a href="#" class="d-flex flex-column ">
+                                <p class="text-light-green">
+                                    <span class="text-dark-white">${index + 1}</span> ${item.FoodName}
+                                </p>
+                                <span class="text-light-white" style="text-align:left">Số lượng: ${item.CartItemQuantity}</span>
+                            </a>
+                        </div>
+                        <div class="delete-btn" onclick="handleDeleteItem({{current_user.get_id()}},${item.FoodID})">
+                            <a href="#" class="text-dark-white">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </div>
+                        <div class="price">
+                            <a href="#" class="text-dark-white fw-bold"> ${Number(item.newPrice).toLocaleString('en-US')} đ</a>
+                        </div>
+                    </div>
+                </div>
+                `
+            })
+        
+            // console.log(total)
+            cartContainer.innerHTML = htmls.join('') +
+            `
+            <div class="item-total">
+                <div class="total-price border-0">
+                    <span class="text-dark-white">Tổng tiền:</span>
+                    <span class="text-dark-white fw-700">${total.toLocaleString('en-US')} đ</span>
+                </div>
+                <!--<div class="empty-bag padding-15"><a href="#">Empty bag</a></div>-->
+            </div>
+            `
+        }
+        // const notifyCart = document.querySelector('.user-alert-cart')
+        
+        document.querySelector('.cart-btn').onmouseenter = function(e) {
+            const cartItems = document.querySelectorAll('.cat-product-box')
+            // const cart = JSON.parse(localStorage.getItem('cart')) || {count: -1}
+            // console.log(cart.count, cartContainer.children.length)
+            // if(cart.count !== cartContainer.children.length) {
+            const cartData = renderCart(Number('{{current_user.get_id()}}'))
+            //     //cart.count = cartContainer.children.length - 1
+            //     // localStorage.setItem('cart', JSON.stringify(cart))
+        }
+
+        
+    
+    
+   
+    
+
+        async function handleDeleteItem(userId, foodId) {
+            const formData = { userId, foodId }
+            try {
+                const response = await fetch('http://127.0.0.1:5000/remove-cart', {
+                    method: 'delete',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                }).then(() => {
+                    alert("Đã xóa thành công")
+                    notifyCart.innerText = cartItems.length;
+                })
+                
+            } catch(err) {
+                console.log(err)
+            }
+        }
+
+    </script>
 </html>

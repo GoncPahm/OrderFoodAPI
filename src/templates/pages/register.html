@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layoutOnlyBody.html" %}
 {% block title%} Register {% endblock %}
 
 {% block content %}
@@ -33,40 +33,21 @@
                                             {{ form.email }}
                                             <p class="email-error"></p>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group field-password">
                                             <label class="text-light-white fs-14">Password (8 character minimum)</label>
                                             {{ form.password }}
-                                            <p class="password-error"></p>
                                             <div
                                                 data-name="#password-field"
                                                 class="fa fa-fw fa-eye field-icon toggle-password"
                                             ></div>
                                         </div>
+                                        <p class="password-error"></p>
                                 
                                         <div class="form-group">
                                             {{ form.submit() }}
                                         </div>
-                                        <div class="form-group text-center"><span>or</span></div>
-                                        <div class="form-group">
-                                            <button
-                                                type="submit"
-                                                class="btn-second btn-facebook full-width"
-                                                fdprocessedid="ondn7"
-                                            >
-                                                <span class="mx-1"><i class="fa-brands fa-facebook"></i></span>Continue
-                                                with Facebook
-                                            </button>
-                                        </div>
-                                        <div class="form-group">
-                                            <button
-                                                type="submit"
-                                                class="btn-second btn-google full-width"
-                                                fdprocessedid="91nx7j"
-                                            >
-                                                <span class="mx-1"><i class="fa-brands fa-google"></i></span>
-                                                Continue with Google
-                                            </button>
-                                        </div>
+                                        
+                                       
                                         <div class="form-group text-center">
                                             <p class="text-light-black mb-0">
                                                 Have an account? <a href="/login">Sign in</a>

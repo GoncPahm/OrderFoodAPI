@@ -92,16 +92,16 @@ Version: 1.0.0
       });
       $(".parent-megamenu").click(function(){
         $(".megamenu").toggleClass("show");
-      });
+      }); 
       // like dislike
-      $(".circle-tag img, .add-fav img, .add-wishlist img").on('click', function () {
-        if ($(this).attr("src").toString().indexOf('assets/imgs/heart.svg') != -1) {
-        this.src = this.src.replace("assets/imgs/heart.svg", "assets/imgs/heart_active.svg");
-        }
-        else {
-        this.src = this.src.replace("assets/imgs/heart_active.svg", "assets/imgs/heart.svg");
-        }
-        });
+      // $(".circle-tag img, .add-fav img, .add-wishlist img").on('click', function () {
+      //   if ($(this).attr("src").toString().indexOf('/static/imgs/heart.svg') != -1) {
+      //   this.src = this.src.replace("/static/imgs/heart.svg", "/static/imgs/heart_active.svg");
+      //   }
+      //   else {
+      //   this.src = this.src.replace("/static/imgs/heart_active.svg", "/static/imgs/heart.svg");
+      //   }
+      //   });
       });
       // Video
       $(document).on('click', '.js-videoPoster', function (e) {
@@ -654,4 +654,3 @@ Version: 1.0.0
   
   
   })(jQuery);
-  

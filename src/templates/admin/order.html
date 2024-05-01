@@ -25,7 +25,7 @@
                 <th scope="col">{{order.OrderID}}</th>
                 <th scope="col">{{order.UserID}}</th>
                 <th scope="col">{{order.OrderDate}} vnđ</th>
-                <th scope="col">{% if order.Status == 0 %} Thành công {%else%} Đang giao hàng {%endif%} %</th>
+                <th scope="col">{% if order.Status == 0 %} Thành công {%else%} Đang giao hàng {%endif%}</th>
                 <th scope="col">{{order.OrderPayment}}</th>
             </tr>
             {%endfor%} {%endif%}

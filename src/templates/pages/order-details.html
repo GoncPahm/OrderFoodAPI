@@ -1,160 +1,218 @@
 {% extends "layout.html" %}
 {% block title%} Order Detail {% endblock %}
 {% block content%}
-    <div class="main-sec"></div>
-    <!-- Navigation -->
-	<section class="checkout-page section-padding bg-light-theme">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="tracking-sec">
-                        <div class="tracking-details padding-20 p-relative">
-                            <h5 class="text-light-black fw-600">Great Burger</h5>
-                            <span class="text-light-white">Estimated Delivery time</span>
-                            <h2 class="text-light-black fw-700 no-margin">9:00pm-9:10pm</h2>
-                            <div id="add-listing-tab" class="step-app">
-                                <ul class="step-steps">
-                                    <li class="done">
-                                        <a href="javascript:void(0)"> <span class="number"></span>
-                                            <span class="step-name">Order sent<br>8:38pm</span>
-                                        </a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="javascript:void(0)"> <span class="number"></span>
-                                            <span class="step-name">In the works</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)"> <span class="number"></span>
-                                            <span class="step-name">Out of delivery</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)"> <span class="number"></span>
-                                            <span class="step-name">Delivered</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <button type="button" class="fullpageview text-light-black fw-600" data-modal="modal-12" fdprocessedid="9o9i09">Full Page View</button>
-                            </div>
+<div class="main-sec"></div>
+<!-- Navigation -->
+<section class="checkout-page section-padding bg-light-theme">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- recipt -->
+                <div class="recipt-sec padding-20">
+                    <div class="recipt-name title u-line full-width mb-xl-20">
+                        <div class="recipt-name-box">
+                            <h5 class="text-light-black fw-600 mb-2">Great Burger</h5>
+                            <p class="text-light-white ">Estimated Delivery time</p>
                         </div>
-                        <div class="tracking-map">
-                            <!-- mapbox -->
+                        <div class="countdown-box">
+                            <div class="time-box"> <span id="mb-hours">02<h6 class="mb-0">Hours</h6></span>
+                            </div>
+                            <div class="time-box"> <span id="mb-minutes">56<h6 class="mb-0">Minutes</h6></span>
+                            </div>
+                            <div class="time-box"> <span id="mb-seconds">25<h6 class="mb-0">Seconds</h6></span>
+                            </div>
                         </div>
                     </div>
-                    <!-- recipt -->
-                    <div class="recipt-sec padding-20">
-                        <div class="recipt-name title u-line full-width mb-xl-20">
-                            <div class="recipt-name-box">
-                                <h5 class="text-light-black fw-600 mb-2">Great Burger</h5>
-                                <p class="text-light-white ">Estimated Delivery time</p>
-                            </div>
-                            <div class="countdown-box">
-                                <div class="time-box"> <span id="mb-hours">02<h6 class="mb-0">Hours</h6></span>
-                                </div>
-                                <div class="time-box"> <span id="mb-minutes">56<h6 class="mb-0">Minutes</h6></span>
-                                </div>
-                                <div class="time-box"> <span id="mb-seconds">25<h6 class="mb-0">Seconds</h6></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="u-line mb-xl-20">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="recipt-name full-width padding-tb-10 pt-0">
-                                        <h5 class="text-light-black fw-600">Delivery (ASAP) to:</h5>
-                                        <span class="text-light-white ">Jhon Deo</span>
-                                        <span class="text-light-white ">Home</span>
-                                        <span class="text-light-white ">314 79th St</span>
-                                        <span class="text-light-white ">Rite Aid, Brooklyn, NY, 11209</span>
-                                        <p class="text-light-white ">(347) 123456789</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-6">
-                                    <div class="ad-banner padding-tb-10 h-100">
-                                        <img src="{{ url_for('static', filename='imgs/chicken.webp') }}" class="img-fluid full-width" alt="banner-adv">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="u-line mb-xl-20">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h5 class="text-light-black fw-600 title">Your Order <span><a href="#" class="fs-12">Print recipt</a></span></h5>
-                                    <p class="title text-light-white">Nov 15, 2015 8:38pm <span class="text-light-black">Order #123456789012345</span>
-                                    </p>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="checkout-product">
-                                        <div class="img-name-value">
-                                            <div class="product-img">
-                                                <a href="#">
-                                                    <img src="{{ url_for('static', filename='imgs/linguine.png') }}" alt="#">
-                                                </a>
-                                            </div>
-                                            <div class="product-value"> <span class="text-light-white">2</span>
-                                            </div>
-                                            <div class="product-name"> <span><a href="#" class="text-light-white">Steak Burger</a></span>
-                                            </div>
-                                        </div>
-                                        <div class="price"> <span class="text-light-white">$20.99</span>
-                                        </div>
-                                    </div>
-                                    <div class="checkout-product">
-                                        <div class="img-name-value">
-                                            <div class="product-img">
-                                                <a href="#">
-                                                    <img src="{{ url_for('static', filename='imgs/linguine.png') }}" alt="#">
-                                                </a>
-                                            </div>
-                                            <div class="product-value"> <span class="text-light-white">2</span>
-                                            </div>
-                                            <div class="product-name"> <span><a href="#" class="text-light-white">Steak Burger</a></span>
-                                            </div>
-                                        </div>
-                                        <div class="price"> <span class="text-light-white">$20.99</span>
-                                        </div>
-                                    </div>
-                                    <div class="checkout-product">
-                                        <div class="img-name-value">
-                                            <div class="product-img">
-                                                <a href="#">
-                                                    <img src="{{ url_for('static', filename='imgs/linguine.png') }}" alt="#">
-                                                </a>
-                                            </div>
-                                            <div class="product-value"> <span class="text-light-white">2</span>
-                                            </div>
-                                            <div class="product-name"> <span><a href="#" class="text-light-white">Steak Burger</a></span>
-                                            </div>
-                                        </div>
-                                        <div class="price"> <span class="text-light-white">$20.99</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="u-line mb-xl-20">
                         <div class="row">
-                            <div class="col-lg-7">
-                                <div class="payment-method mb-md-40">
-                                    <h5 class="text-light-black fw-600">Payment Method</h5>
-                                    <div class="method-type"> <i class="far fa-credit-card text-dark-white"></i>
-                                        <span class="text-light-white">Credit Card</span>
+                            <div class="col-lg-6">
+                                <div class="recipt-name full-width padding-tb-10 pt-0">
+                                    <h5 class="text-light-black fw-600">Delivery (ASAP) to:</h5>
+                                    <span class="text-light-white fs-6 username"></span>
+                                    <span class="text-light-white fs-6 useraddress"></span>
+                                    <p class="text-light-white fs-6 usertel"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div id="tracking-map">
+                                    <!-- mapbox -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-line mb-xl-20">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="text-light-black fw-600 title">Your Order <span><a href="#"
+                                            class="fs-12">Print recipt</a></span></h5>
+                                {% if food_data %}
+                                <p class="title text-light-white">{{food_data[0].OrderDate}}<span
+                                        class="text-light-black">Order #{{food_data[0].OrderID}}</span>
+                                </p>
+                                {% else %}
+                                <p class="title text-light-white"><span class="text-light-black">Order #</span>
+                                </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-12 list">
+                                {% if food_data %}
+                                {% for item in food_data %}
+                                <div class="checkout-product">
+                                    <div class="img-name-value">
+                                        <div class="product-img">
+                                            <a href="#">
+                                                <img src="{{ item.FoodImage }}" alt="#">
+                                            </a>
+                                        </div>
+                                        <div class="product-value"> <span
+                                                class="text-light-white">{{item.OrderQuantity}}</span>
+                                        </div>
+                                        <div class="product-name"> <span><a href="#"
+                                                    class="text-light-white">{{item.FoodName}}</a></span>
+                                        </div>
+                                    </div>
+                                    <div class="price"> <span class="text-light-white">{{ item.totalPrice | int}}
+                                            VNĐ</span>
                                     </div>
                                 </div>
+                                {% endfor %}
+                                {% else %}
+                                {% endif %}
                             </div>
-                            <div class="col-lg-5">
-                            
-                                <div class="total-price padding-tb-10">
-                                    <h5 class="title text-light-black fw-700">Total: <span>$33.36</span></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="payment-method mb-md-40">
+                                {% if food_data %}
+                                <h5 class="text-light-black fw-600">Payment Method</h5>
+                                <div class="method-type"> <i class="far fa-credit-card text-dark-white"></i>
+                                    <span class="text-light-white">{{food_data[0].OrderPayment}}</span>
+                                    <span class="text-light-white"></span>
                                 </div>
+                                {% else %}
+                                <h5 class="text-light-black fw-600">Payment Method</h5>
+                                <div class="method-type"> <i class="far fa-credit-card text-dark-white"></i>
+                                    <span class="text-light-white"></span>
+                                    <span class="text-light-white"></span>
+                                </div>
+                                {% endif %}
                             </div>
-                            <div class="col-12 d-flex"> <a href="#" class="btn-first white-btn fw-600 help-btn">Need Help?</a>
+                        </div>
+
+                        <div class="col-lg-5">
+                            <div class="total-price padding-tb-10">
+                                {% if totalPrice %}
+                                <h5 class="title text-light-black fw-700">Total: <span class="totalprice">{{totalPrice |
+                                        int}} VNĐ</span>
+                                </h5>
+                                {% else %}
+                                <h5 class="title text-light-black fw-700">Total: <span class="totalprice">0 VNĐ</span>
+                                </h5>
+                                {% endif %}
                             </div>
+                        </div>
+                        <div class="col-12 d-flex"> <a href="#" class="btn-first white-btn fw-600 help-btn">Need
+                                Help?</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<script>
+    let pos;
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/order-details-data') // Đường dẫn tới API của bạn
+            .then(response => response.json())
+            .then(data => {
+                if (data.user_data && data.user_data.length > 0) {
+                    document.querySelector('.username').textContent = data.user_data[0].DetailName ? data.user_data[0].DetailName : '';
+                    const userAddressElement = document.querySelector('.useraddress');
+                    userAddressElement.textContent = data.user_data[0].DetailAddress ? data.user_data[0].DetailAddress : '';
+                    pos = data.user_data[0].DetailAddress;
+                    document.querySelector('.usertel').textContent = data.user_data[0].DetailTel ? data.user_data[0].DetailTel : '';
+                }
+
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    mapboxgl.accessToken = "pk.eyJ1IjoiaGFodmJnIiwiYSI6ImNsdXdkNjF2ZDBiZnQya3J5N3dyd3B4OTAifQ.TNTQyh1ucrKt9GZWPkIhSQ";
+    const map = new mapboxgl.Map({
+        container: "tracking-map", // container ID
+        style: "mapbox://styles/mapbox/streets-v12", // style URL
+        center: [105.740342, 21.026785], // starting position [lng, lat]
+        zoom: 9, // starting zoom
+    });
+    const defaultLocation = [105.740342, 21.026785]
+    const marker = new mapboxgl.Marker({
+        color: "red",
+        draggable: false,
+    }).setLngLat(defaultLocation).addTo(map);
+
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.FullscreenControl());
+    map.addControl(
+        new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true,
+            },
+            trackUserLocation: true,
+            showUserHeading: true,
+        })
+    );
+    
+    if (pos) {
+        const locationName = pos;
+        const geocodingApiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(locationName)}.json?access_token=${mapboxgl.accessToken}`;
+
+        fetch(geocodingApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const coordinates = data.features[0].geometry.coordinates;
+                createRouteToSecondLocation(coordinates);
+            })
+            .catch(error => console.error('Error fetching location:', error));
+
+        // Tạo tuyến đường đến vị trí thứ hai
+        function createRouteToSecondLocation(secondLocationCoordinates) {
+            const secondMarker = new mapboxgl.Marker({
+                color: "blue",
+                draggable: false,
+            }).setLngLat([secondLocationCoordinates[0], secondLocationCoordinates[1]]).addTo(map);
+            const origin = [105.740342, 21.026785];
+            const destination = secondLocationCoordinates;
+            const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${origin[0]},${origin[1]};${destination[0]},${destination[1]}?access_token=${mapboxgl.accessToken}&geometries=geojson`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    map.addLayer({
+                        id: 'route',
+                        type: 'line',
+                        source: {
+                            type: 'geojson',
+                            data: {
+                                type: 'Feature',
+                                properties: {},
+                                geometry: data.routes[0].geometry,
+                            },
+                        },
+                        paint: {
+                            'line-color': 'blue',
+                            'line-width': 2,
+                        },
+                    });
+                })
+                .catch(error => console.error('Error fetching directions:', error));
+        }
+    }
+
+
+</script>
+
+
 {% endblock %}

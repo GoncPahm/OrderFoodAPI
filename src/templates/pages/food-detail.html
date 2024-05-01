@@ -1,0 +1,223 @@
+{% extends "layout.html" %} {% block title %}Detail{% endblock %} {% block content%}
+<div class="main-sec"></div>
+<!-- Navigation -->
+<section  id="food-wrapper" class="final-order section-padding bg-light-theme" food-id="{{id}}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box padding-20">
+                    <div class="row mb-xl-20">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="section-header-left pb-1">
+                                <a href="/" class="d-inline-block mb-2 fs-6 fw-bold ">Trang chủ</a>
+                                <span class="fs-6 text-light-white label-food-name"></span>
+                                <h3 class="text-light-black header-title fw-700"></h3>
+                            </div>
+                            <div class="text-light-black d-flex align-content-center fw-medium  mb-2 fs-4">
+                                <span class="food-old-price text-decoration-line-through me-3"></span>
+                                <span class="food-price" style="color: #ff0018;"></span>
+                            </div>
+                            <h6 class="text-light-black fw-700 mb-2 food-promo"></h6>
+                            <p class="text-light-white title2 mb-2">
+                                Đánh giá: <span class="ms-0 food-ratings"></span>
+                            </p>
+                            <p class="text-light-green fw-600" style="color: #28a745">Hàng Việt Nam chất lượng cao <i class="fa-solid fa-check"></i></p>
+                        
+                            <div class="add-to-cart d-flex align-content-center mb-3">
+                                <div class="quantity d-flex align-content-center ">
+                                    <button class="quantity-minus btn"><i class="fa-solid fa-minus"></i></button>
+                                    <span class="total-amount">1</span>
+                                    <button class="quantity-plus btn"><i class="fa-solid fa-plus"></i></button>
+                                </div>
+                                <button class="btn btn-add-to-cart"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
+                            </div>
+                        </div>
+
+                        <div class="food-img col-lg-6 col-md-6">
+                            <img src="" alt="img">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="payment-sec">
+                                <div class="section-header-left">
+                                    <h3 class="text-light-black header-title">Thông tin món ăn</h3>
+                                </div>
+                                <div class="food-description text-light-black" style="font-weight: 600;">
+                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    
+        </div>
+    </div>
+</section>
+
+<script>
+    const foodWrapper = document.querySelector('#food-wrapper')
+    const foodName = document.querySelector('.header-title')
+    const foodDescpt = document.querySelector('.food-description')
+    const foodImg = document.querySelector('.food-img img')
+    const foodOldPrice = document.querySelector('.food-old-price')
+    const foodPrice = document.querySelector('.food-price')
+    const labelFoodName = document.querySelector('.label-food-name')
+    const foodPromo = document.querySelector('.food-promo')
+    const foodRatings = document.querySelector('.food-ratings')
+    const changeQuantity = document.querySelector('.quantity')
+    const btnAddToCart = document.querySelector('.btn-add-to-cart')
+    const id = Number(foodWrapper.getAttribute('food-id'))
+
+    function start() {
+        renderFood(id)
+    }
+
+    start()
+
+    async function renderFood(id) {
+        const foodURL = `http://127.0.0.1:5000/food_details/${id}`
+        const [food] = await fetch(foodURL).then(response => response.json())
+        console.log(food);
+        const { FoodID, FoodName, FoodPrice, FoodDiscount, FoodImage, FoodRating, FoodDesc } = food
+        const promo = FoodDiscount ? Number(FoodDiscount) : 0
+        const oldPrice = Number(FoodPrice).toLocaleString('en-US')
+        const newPrice = Math.round((100 - promo) * Number(FoodPrice) / 100).toLocaleString('en-US')
+
+        foodName.innerText = FoodName
+        labelFoodName.innerText = "> " + FoodName
+        foodDescpt.innerText = FoodDesc
+        foodImg.src = FoodImage
+
+        if(!promo) {
+            foodOldPrice.style.display = 'none'
+            foodPromo.style.display = 'none'
+        }
+
+        foodOldPrice.innerText = oldPrice + ' đ'
+        foodPromo.innerText =  'Giảm ' + promo + '%'
+         
+        foodPrice.innerText = newPrice + ' đ'
+        
+        foodRatings.innerText = FoodRating + ' ratings'
+
+    }
+    
+    
+    var cartContainer = document.querySelector('.card-body')
+
+    async function renderCart(userId) {
+        const cartURL = 'http://127.0.0.1:5000/cart/' + userId
+        const cartItems = await fetch(cartURL).then(response => response.json())
+
+        
+        let total = 0
+    
+        const htmls = cartItems.map((item, index) => {
+            total += item.newPrice
+            return `
+            <div class="cat-product-box">
+                <div class="cat-product">
+                    <div class="cat-name">
+                        <a href="#" class="d-flex flex-column ">
+                            <p class="text-light-green">
+                                <span class="text-dark-white">${index + 1}</span> ${item.FoodName}
+                            </p>
+                            <span class="text-light-white" style="text-align:left">Số lượng: ${item.CartItemQuantity}</span>
+                        </a>
+                    </div>
+                    <div class="delete-btn" onclick="handleDeleteItem({{current_user.get_id()}},${item.FoodID})">
+                        <a href="#" class="text-dark-white">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </div>
+                    <div class="price">
+                        <a href="#" class="text-dark-white fw-500"> ${Number(item.FoodPrice).toLocaleString('en-US')} đ</a>
+                    </div>
+                </div>
+            </div>
+            `
+        })
+
+        cartContainer.innerHTML = htmls.join('') +
+         `
+         <div class="item-total">
+            <div class="total-price border-0">
+                <span class="text-dark-white fw-700">Tổng tiền:</span>
+                <span class="text-dark-white fw-700">${total.toLocaleString('en-US')} đ</span>
+            </div>
+            <!--<div class="empty-bag padding-15"><a href="#">Empty bag</a></div>-->
+        </div>
+         `
+       
+        
+    }
+
+    async function handleDeleteItem(userId, foodId) {
+        const formData = { userId, foodId }
+        try {
+            const response = await fetch('http://127.0.0.1:5000/remove-cart', {
+                method: 'delete',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+            renderCart(userId)
+            alert("Đã xóa thành công")
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    
+
+    changeQuantity.onclick = function(e) {
+        const amount = document.querySelector('.total-amount')
+        let num = Number(amount.innerText)
+        if(e.target.closest('.quantity-plus')) {    
+            amount.innerText = ++num + ''
+        } else if(e.target.closest('.quantity-minus')) {
+            num--
+            if(num) amount.innerText = num
+        }
+    }
+
+    btnAddToCart.onclick = async function(e) {
+        const cartContainer = document.querySelector('.cart-body')
+
+        const userId = Number('{{current_user.get_id()}}')
+
+        const cartItems = await fetch('http://127.0.0.1:5000/cart/' + userId).then(response => response.json())
+        const idItems = cartItems.map(item => item.FoodID)
+
+        if(idItems.includes(id)) {
+            alert(`${foodName.innerText} đã có trong giỏ hàng`)
+            return
+        }
+
+        const formData = { 
+            userId: userId,
+            foodId: id,
+            quantity: Number(document.querySelector('.total-amount').innerText)
+        }
+        
+        try {
+            const response = await fetch('http://127.0.0.1:5000/add-cart', {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            }).then(() => alert(`Đã thêm ${foodName.innerText} vào giỏ hàng`))
+            
+        } catch(err) {
+            console.log(err)
+        }
+
+    }
+
+</script>
+{% endblock %}

@@ -2,10 +2,17 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_cors import CORS
 import os
 import pyodbc
+from werkzeug.utils import secure_filename
 from datetime import timedelta,datetime, timezone
 from flask_login import LoginManager, UserMixin, logout_user, login_required, current_user
 from user import user, User
+from userdetails import user_details
 from admin import admin
+from cart import cart
+from food import food
+from order_details import order_details
+from order_history import order_history_bp
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'OrderFoodAPI'
 
@@ -23,6 +30,10 @@ login_manager.login_view = 'user.login'
 
 app.permanent_session_lifetime = timedelta(hours=24)
 
+
+upload = 'E:/OrderFoodAPI/src/assets/imgs/food'
+app.config['UPLOAD_FOLDER'] = upload
+
 conn = pyodbc.connect("DRIVER={SQL Server};SERVER=LAPTOP-NIANCD4A\SQLEXPRESS;DATABASE=OrderFood;Trusted_Connection=yes")
 cursor = conn.cursor()
 
@@ -36,7 +47,7 @@ def load_user(user_id):
         first_name = user_data.UserFirstName
         last_name = user_data.UserLastName
         return User(user_id, first_name, last_name)
-    
+
     return None
 
 @app.before_request
@@ -48,25 +59,19 @@ def check_session_expiry():
         logout_user()
 
 @app.route("/", methods=["GET"])
+@login_required
 def index():
     return render_template("pages/index.html", current_user = current_user)
 
-@app.route("/checkout", methods=["GET"])
-@login_required
-def checkout():
-    return render_template("pages/checkout.html")
-
-@app.route("/order-details", methods=["GET"])
-def order_detail():
-    return render_template("pages/order-details.html")
-
-@app.route("/details", methods=["GET"])
-def details():
-    return "Details"
-
-
 app.register_blueprint(user)
 app.register_blueprint(admin)
+app.register_blueprint(user_details)
+app.register_blueprint(cart)
+app.register_blueprint(food)
+app.register_blueprint(order_details)
+app.register_blueprint(order_history_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+

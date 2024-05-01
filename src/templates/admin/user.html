@@ -84,6 +84,7 @@
     const userLastNameField = form.elements["user-lastname-field"];
     const userEmailField = form.elements["user-email-field"];
     const buttonUpdate = document.querySelector("#button-update");
+    const buttonDelete = document.querySelector('.icon-delete')
 
     const errorEmail = document.querySelector(".email-error");
     const errorFirstName = document.querySelector(".firstname-error");
@@ -151,6 +152,21 @@
             errorFirstName.innerHTML = "";
             errorLastName.innerHTML = "";
         }
+
+        if(event.target.closest(".icon-delete")) {
+            console.log("HIHI");
+            const res = await fetch(`http://127.0.0.1:5000/delete_user/${userID}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            const data = await res.json();
+            if(data.success) {
+                renderData();
+                alert(data.message);
+            }
+        }
     }
 
     buttonUpdate.addEventListener("click", async (e) => {
@@ -196,3 +212,4 @@
     });
 </script>
 {% endblock %}
+

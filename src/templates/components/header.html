@@ -3,33 +3,28 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 mainNavCol">
-                    <!-- logo -->
-                    <!-- <div class="logo mainNavCol">
-                        <a href="index.html">
-                            <img src="assets/imgs/heart.svg" class="img-fluid" alt="Logo">
-                        </a>
-                    </div> -->
-                    <!-- logo -->
+                    
                     <div class="main-search mainNavCol">
                         <form class="main-search search-form full-width">
                             <div class="row">
                                 <!-- location picker -->
-                                <div class="col-lg-6 col-md-5">
+                                <div class="col-lg-4 col-md-3">
                                     <a href="/">
-                                        <!-- class="delivery-add p-relative" -->
-                                        <span class="address">Food Order</span>
+                                        <span id="logo" class="fs-5">Food Order</span>
                                     </a>
                                 </div>
                                 <!-- location picker -->
                                 <!-- search -->
-                                <div class="col-lg-6 col-md-7">
+                                <div class="col-lg-8 col-md-9">
                                     <div class="search-box padding-10">
                                         <input
                                             type="text"
                                             class="form-control"
-                                            placeholder="Pizza, Burger, Chinese"
+                                            placeholder="Nhập tên món ăn..."
                                             fdprocessedid="ifk5af"
+                                            
                                         />
+                                        <button class="btn-search">Tìm kiếm</button>
                                     </div>
                                 </div>
                                 <!-- search -->
@@ -59,9 +54,9 @@
                                             <a href="/order-details" class="text-light-white fw-500">Order Details</a>
                                         </li>
                                         <li>
-                                            <a href="geo-locator.html" class="text-light-white fw-500">Geo Locator</a>
+                                            <a href="/order-history" class="text-light-white fw-500">Order History</a>
                                         </li>
-                                        <li><a href="/contact" class="text-light-white fw-500">Contact Us</a></li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -75,7 +70,10 @@
                         <!-- mobile search -->
                         <!-- user account -->
                         <div class="user-details p-relative">
+
                             <a href="/login" class="text-light-white fw-500 user-block"> Log in </a>
+
+
                         </div>
                         <!-- mobile search -->
 
@@ -83,79 +81,15 @@
                         <div class="cart-btn cart-dropdown">
                             <a href="#" class="text-light-green fw-700">
                                 <i class="fas fa-shopping-bag"></i>
-                                <span class="user-alert-cart">3</span>
+                                <!-- <span class="user-alert-cart">3</span> -->
                             </a>
-                            <div class="cart-detail-box">
+                            <div class="cart-detail-box" style="width: 280px;">
                                 <div class="card">
                                     <div class="card-header padding-15">Your Order</div>
-                                    <div class="card-body no-padding">
-                                        <div class="cat-product-box">
-                                            <div class="cat-product">
-                                                <div class="cat-name">
-                                                    <a href="#">
-                                                        <p class="text-light-green">
-                                                            <span class="text-dark-white">1</span> Chilli Chicken
-                                                        </p>
-                                                        <span class="text-light-white">small, chilli chicken</span>
-                                                    </a>
-                                                </div>
-                                                <div class="delete-btn">
-                                                    <a href="#" class="text-dark-white">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="price">
-                                                    <a href="#" class="text-dark-white fw-500"> $2.25 </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cat-product-box">
-                                            <div class="cat-product">
-                                                <div class="cat-name">
-                                                    <a href="#">
-                                                        <p class="text-light-green">
-                                                            <span class="text-dark-white">1</span> loaded cheese
-                                                        </p>
-                                                        <span class="text-light-white">small, chilli chicken</span>
-                                                    </a>
-                                                </div>
-                                                <div class="delete-btn">
-                                                    <a href="#" class="text-dark-white">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="price">
-                                                    <a href="#" class="text-dark-white fw-500"> $2.25 </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cat-product-box">
-                                            <div class="cat-product">
-                                                <div class="cat-name">
-                                                    <a href="#">
-                                                        <p class="text-light-green">
-                                                            <span class="text-dark-white">1</span> Tortia Chicken
-                                                        </p>
-                                                        <span class="text-light-white">small, chilli chicken</span>
-                                                    </a>
-                                                </div>
-                                                <div class="delete-btn">
-                                                    <a href="#" class="text-dark-white">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="price">
-                                                    <a href="#" class="text-dark-white fw-500"> $2.25 </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-total">
-                                            <div class="total-price border-0">
-                                                <span class="text-dark-white fw-700">Items subtotal:</span>
-                                                <span class="text-dark-white fw-700">$9.99</span>
-                                            </div>
-                                            <div class="empty-bag padding-15"><a href="#">Empty bag</a></div>
-                                        </div>
+                                    <div class="card-body no-padding" style="max-height: 300px;
+                                    overflow-y: scroll;">
+                                        
+                                        
                                     </div>
                                     <div class="card-footer padding-15">
                                         <a
@@ -202,6 +136,7 @@
 <script>
     const userBlock = document.querySelector(".user-block");
     const user = JSON.parse(localStorage.getItem("user"));
+    const cartDropdown = document.querySelector('.cart-dropdown');
     if (user) {
         userBlock.href = "#";
         userBlock.innerHTML = `
@@ -211,44 +146,15 @@
                 <ul>
                     <li>
                         <a href="/order-details">
-                            <span class="details">Past Orders</span>
+                            <span class="details">Newsest Order</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/order-details">
-                            <span class="details">Upcoming Orders</span>
+                        <a href="/checkout">
+                            <span class="details">Checkout</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <span class="details">Saved</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="details">Gift cards</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="details">Refer a friend</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="details">Perks</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="details">Account</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="details">Help</span>
-                        </a>
-                    </li>
+                    
                 </ul>
                 <div class="user-footer">
                     <a href="{{url_for('user.log_out')}}" onclick = logout()>
@@ -261,4 +167,5 @@
     function logout() {
         localStorage.removeItem("user");
     }
+
 </script>
